@@ -9,7 +9,8 @@ load_dotenv()
 
 openai.api_key = os.getenv('API_KEY')
 topic = input("What should the quiz be about?\n")
-prompt = f"""Generate a quiz about {topic}. 
+length = input("How many questions should the quiz be?\n")
+prompt = f"""Generate a quiz with {length} questions and {length} answers about {topic}. {length} Questions, {length} answers. 
 Here are a few examples: 
 
 Fractions Quiz: 
@@ -40,7 +41,11 @@ Question 3: 12
 response = openai.Completion.create(
     engine="text-davinci-001", 
     prompt= prompt, 
+    presence_penalty=.4,
+    temperature=.9,
     max_tokens= 500
+
+    
 )
 gentext = response.choices[0].text
 print(gentext)
